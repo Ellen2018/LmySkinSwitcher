@@ -9,6 +9,12 @@
        android:text="界面三"
        android:textSize="40sp"
        android:gravity="center"
-       android:layout_height="match_parent"/>
+       android:layout_height="match_parent" />
+
+   <TextView
+       android:layout_width="match_parent"
+       android:layout_height="?actionBarSize"
+       android:layout_alignParentBottom="true"
+       android:background="@color/main_color" />
 
 </RelativeLayout>

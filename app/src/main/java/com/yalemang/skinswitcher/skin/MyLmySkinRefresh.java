@@ -17,12 +17,18 @@ public class MyLmySkinRefresh implements LmySkinRefresh {
         int resId = lmyRefreshSkin.getResId();
         String attributeName = lmyRefreshSkin.getAttributeName();
         Resources skinResource = lmyRefreshSkin.getResources();
+        Log.d("Ellen2018",attributeName+"->"+lmyRefreshSkin.getAttributeValue());
+        Log.d("Ellen2018","resId = "+resId);
         if (attributeName.equals("textColor")) {
             TextView textView = (TextView) view;
-            textView.setTextColor(skinResource.getColorStateList(resId));
+            textView.setTextColor(skinResource.getColor(resId));
         }
         if (attributeName.equals("background")) {
-            view.setBackgroundColor(skinResource.getColor(resId));
+            try {
+                view.setBackgroundColor(skinResource.getColor(resId));
+            }catch (Exception e){
+                view.setBackground(skinResource.getDrawable(resId));
+            }
         }
         if (attributeName.equals("tabIndicatorColor")) {
             //TabLayout下划线颜色
