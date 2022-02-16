@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:id="@+id/tv_skin_color"
+        android:layout_width="match_parent"
+        android:layout_alignParentBottom="true"
+        android:text="背景色就是换肤颜色"
+        android:gravity="center"
+        android:textColor="#ffffff"
+        android:background="@color/main_color"
+        android:layout_height="?actionBarSize"/>
+
+</RelativeLayout>

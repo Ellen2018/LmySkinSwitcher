@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:text="界面一"
+        android:gravity="center"
+        android:textSize="40sp"
+        android:textColor="@color/main_color"
+        android:layout_height="match_parent"/>
+
+    <Button
+        android:id="@+id/bt_switch_skin"
+        android:layout_width="wrap_content"
+        android:text="切换皮肤"
+        android:layout_height="wrap_content"/>
+
+</RelativeLayout>
