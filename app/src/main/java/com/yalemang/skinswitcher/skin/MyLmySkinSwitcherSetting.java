@@ -3,6 +3,7 @@ package com.yalemang.skinswitcher.skin;
 import android.app.Activity;
 
 import com.yalemang.skinswitcher.SkinManagerActivity;
+import com.yalemang.skinswitcher.SwitchSkinActivity;
 import com.yalemang.skinswitcherlibraray.skinnterface.LmySkinRefresh;
 import com.yalemang.skinswitcherlibraray.skinnterface.LmySkinSwitcherSetting;
 

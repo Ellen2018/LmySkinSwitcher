@@ -21,12 +21,21 @@ class LmySkinActivityLifecycle implements Application.ActivityLifecycleCallbacks
     @Override
     @SuppressLint("SoonBlockedPrivateApi")
     public void onActivityCreated(@NonNull Activity activity, @Nullable Bundle bundle) {
-        activeActivityList.add(activity);
-        LayoutInflater layoutInflater = LayoutInflater.from(activity);
-        //反射setFactory2,Android Q及以上已经失效-> 报not field 异常
-        //Android Q以上setFactory2问题
-        //http://www.javashuo.com/article/p-sheppkca-ds.html
-        forceSetFactory2(layoutInflater);
+        boolean isReflect = true;
+        for(Class<? extends Activity> activityClass:LmySkinManager.getInstance().getShieldActivityList()){
+            if(activity.getClass().equals(activityClass)){
+                isReflect = false;
+                break;
+            }
+        }
+        if(isReflect) {
+            activeActivityList.add(activity);
+            LayoutInflater layoutInflater = LayoutInflater.from(activity);
+            //反射setFactory2,Android Q及以上已经失效-> 报not field 异常
+            //Android Q以上setFactory2问题
+            //http://www.javashuo.com/article/p-sheppkca-ds.html
+            forceSetFactory2(layoutInflater);
+        }
     }
 
     /**
