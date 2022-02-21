@@ -2,11 +2,14 @@ package com.yalemang.skinswitcher.skin;
 
 import android.app.Activity;
 
+import com.yalemang.skinswitcher.App;
 import com.yalemang.skinswitcher.SkinManagerActivity;
-import com.yalemang.skinswitcher.SwitchSkinActivity;
+import com.yalemang.skinswitcher.utils.SharePreferenceHelper;
+import com.yalemang.skinswitcherlibraray.LmySkin;
 import com.yalemang.skinswitcherlibraray.skinnterface.LmySkinRefresh;
 import com.yalemang.skinswitcherlibraray.skinnterface.LmySkinSwitcherSetting;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,5 +39,21 @@ public class MyLmySkinSwitcherSetting implements LmySkinSwitcherSetting {
         List<Class<? extends Activity>> shieldActivityList = new ArrayList<>();
         shieldActivityList.add(SkinManagerActivity.class);
         return shieldActivityList;
+    }
+
+    @Override
+    public LmySkin applyAppLaunchSkin() {
+        //获取用户是否已切换的皮肤
+        LmySkin lmySkin = SharePreferenceHelper.getInstance().getCurrentSaveSkin(App.INSTANCE);
+        return lmySkin;
+    }
+
+    @Override
+    public LmySkin defaultSkin() {
+       return getDefaultSkin();
+    }
+
+    public static LmySkin getDefaultSkin(){
+        return new LmySkin("default","default");
     }
 }

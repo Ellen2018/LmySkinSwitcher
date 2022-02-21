@@ -12,11 +12,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.yalemang.skinswitcher.adapter.SkinManagerAdapter;
 import com.yalemang.skinswitcher.utils.FileUtils;
+import com.yalemang.skinswitcher.utils.SharePreferenceHelper;
 import com.yalemang.skinswitcherlibraray.LmySkin;
 import com.yalemang.skinswitcherlibraray.LmySkinManager;
 import com.yalemang.skinswitcherlibraray.skinnterface.LmySkinSwitchListener;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 public class SkinManagerActivity extends AppCompatActivity {
@@ -28,6 +30,8 @@ public class SkinManagerActivity extends AppCompatActivity {
     private LmySkinSwitchListener lmySkinSwitchListener = new LmySkinSwitchListener() {
         @Override
         public void switchSkin(LmySkin newSkin) {
+            //保存当前的皮肤数据，下次应用启动需使用该皮肤
+            SharePreferenceHelper.getInstance().saveSwitchSkin(newSkin);
             skinManagerAdapter.notifyDataSetChanged();
             refreshBottom();
         }
@@ -64,7 +68,7 @@ public class SkinManagerActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         skinManagerAdapter = new SkinManagerAdapter(skinData);
         skinManagerAdapter.setItemClick(position -> {
-            LmySkin lmySkin = LmySkinManager.getInstance().getSkinData().get(position);
+            LmySkin lmySkin = skinData.get(position);
             if(!new File(lmySkin.getPath()).exists()){
                 //不存在，先从服务器进行下载，这里模拟只从assets目录复制到本地目录
                 FileUtils.copyFileFromAssets(SkinManagerActivity.this, lmySkin.getName(),
@@ -77,6 +81,8 @@ public class SkinManagerActivity extends AppCompatActivity {
     }
 
     private void loadSkinData() {
+        skinData = new ArrayList<>();
+        skinData.add(LmySkinManager.getInstance().getDefaultSkin());
         for (int i = 0; i < 4; i++) {
             String fileName = "";
             if (i == 0) {
@@ -90,9 +96,8 @@ public class SkinManagerActivity extends AppCompatActivity {
             }
             File file = new File(this.getCacheDir(), fileName);
             LmySkin lmySkin = new LmySkin(file.getAbsolutePath());
-            LmySkinManager.getInstance().addLmySkin(lmySkin);
+            skinData.add(lmySkin);
         }
-        skinData = LmySkinManager.getInstance().getSkinData();
     }
 
     private void initView() {

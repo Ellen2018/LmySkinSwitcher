@@ -16,14 +16,14 @@ public class LmySkinManager {
     private volatile static LmySkinManager INSTANCE;
     //Application对象
     private Application application;
-    //皮肤名字集合
-    private List<LmySkin> lmySkinList = new ArrayList<>();
-    //记录当前应用的皮肤名
+    //记录当前应用的皮肤
     private LmySkin currentSkin = null;
+    //记录默认皮肤
+    private LmySkin defaultSkin = null;
     //应用Activity生命周期监听
     private LmySkinActivityLifecycle lmySkinActivityLifecycle;
     //屏蔽刷新的Activity
-    private List<Class<? extends  Activity>> shieldActivityList;
+    private List<Class<? extends Activity>> shieldActivityList;
     //皮肤切换设置接口
     private LmySkinSwitcherSetting lmySkinSwitcherSetting;
     //皮肤切换监听集合
@@ -33,41 +33,8 @@ public class LmySkinManager {
     private String skinFileFormat = ".apk";
 
     private LmySkinManager(){
-       //默认皮肤
-        LmySkin defaultSkin = new LmySkin("default","default");
-        lmySkinList.add(defaultSkin);
-        currentSkin = defaultSkin;
         //初始化皮肤监听集合
         lmySkinSwitchListenerList = new ArrayList<>();
-    }
-
-    public List<LmySkin> getSkinData(){
-        return lmySkinList;
-    }
-
-    /**
-     * 添加皮肤数据
-     * @param lmySkin
-     */
-    public void addLmySkin(LmySkin lmySkin){
-        boolean isAdd = true;
-        for(LmySkin ls:lmySkinList){
-            if(ls.getPath().equals(lmySkin.getPath())){
-                isAdd = false;
-                break;
-            }
-        }
-        if(isAdd) {
-            lmySkinList.add(lmySkin);
-        }
-    }
-
-    /**
-     * 移除皮肤数据
-     * @param lmySkin
-     */
-    public void removeLmySkin(LmySkin lmySkin){
-        lmySkinList.remove(lmySkin);
     }
 
     /**
@@ -108,6 +75,14 @@ public class LmySkinManager {
      */
     public LmySkin getCurrentSkin(){
         return currentSkin;
+    }
+
+    /**
+     * 获取当前默认皮肤
+     * @return
+     */
+    public LmySkin getDefaultSkin() {
+        return defaultSkin;
     }
 
     public List<Class<? extends Activity>> getShieldActivityList() {
@@ -165,11 +140,23 @@ public class LmySkinManager {
         app.registerActivityLifecycleCallbacks(lmySkinActivityLifecycle = new LmySkinActivityLifecycle());
     }
 
-    public void setting(LmySkinSwitcherSetting lmySkinSwitcherSetting){
+    public void setting(LmySkinSwitcherSetting lmySkinSwitcherSetting) {
         this.lmySkinSwitcherSetting = lmySkinSwitcherSetting;
-        if(this.lmySkinSwitcherSetting.lmySkinRefresh() == null){
+        if (this.lmySkinSwitcherSetting.lmySkinRefresh() == null) {
             //抛出异常
             throw new NullPointerException("lmySkinRefresh is null");
+        }
+        if (this.lmySkinSwitcherSetting.applyAppLaunchSkin() == null) {
+            //抛出异常
+            throw new NullPointerException("currentSkin is null");
+        } else {
+            currentSkin = this.lmySkinSwitcherSetting.applyAppLaunchSkin();
+        }
+        if (this.lmySkinSwitcherSetting.defaultSkin() == null) {
+            //抛出异常
+            throw new NullPointerException("defaultSkin is null");
+        } else {
+            defaultSkin = this.lmySkinSwitcherSetting.defaultSkin();
         }
         this.shieldActivityList = this.lmySkinSwitcherSetting.shieldActivityList();
     }

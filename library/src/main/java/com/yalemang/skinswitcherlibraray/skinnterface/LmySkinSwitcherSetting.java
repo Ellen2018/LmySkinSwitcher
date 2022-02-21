@@ -2,6 +2,8 @@ package com.yalemang.skinswitcherlibraray.skinnterface;
 
 import android.app.Activity;
 
+import com.yalemang.skinswitcherlibraray.LmySkin;
+
 import java.util.List;
 
 /**
@@ -14,4 +16,8 @@ public interface LmySkinSwitcherSetting {
     List<String> interceptFieldNames();
     //过滤掉重构的Activity,一般设置为皮肤设置界面
     List<Class<? extends Activity>> shieldActivityList();
+    //设置应用启动后采用的皮肤
+    LmySkin applyAppLaunchSkin();
+    //默认皮肤
+    LmySkin defaultSkin();
 }
