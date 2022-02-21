@@ -1,6 +1,7 @@
 package com.yalemang.skinswitcherlibraray.bean;
 
 import android.content.res.Resources;
+import android.util.AttributeSet;
 import android.view.View;
 
 /**
@@ -12,6 +13,7 @@ public class LmyRefreshSkin {
     private int resId;
     private String attributeName;
     private String attributeValue;
+    private AttributeSet attributeSet;
 
     public Resources getResources() {
         return resources;
@@ -39,6 +41,14 @@ public class LmyRefreshSkin {
 
     public String getAttributeName() {
         return attributeName;
+    }
+
+    public AttributeSet getAttributeSet() {
+        return attributeSet;
+    }
+
+    public void setAttributeSet(AttributeSet attributeSet) {
+        this.attributeSet = attributeSet;
     }
 
     public void setAttributeName(String attributeName) {
