@@ -81,7 +81,7 @@ public class LmySkinManager {
      * @return
      */
     public boolean isDefaultSkin(){
-        return currentSkin.getPath().equals("default") && currentSkin.getName().equals("default");
+        return currentSkin.equals(lmySkinSwitcherSetting.defaultSkin());
     }
 
     /**
