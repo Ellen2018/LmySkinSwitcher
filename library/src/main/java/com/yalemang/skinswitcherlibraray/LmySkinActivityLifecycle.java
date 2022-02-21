@@ -1,6 +1,5 @@
 package com.yalemang.skinswitcherlibraray;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Application;
 import android.os.Bundle;
@@ -19,7 +18,6 @@ class LmySkinActivityLifecycle implements Application.ActivityLifecycleCallbacks
     private List<Activity> activeActivityList = new ArrayList<>();
 
     @Override
-    @SuppressLint("SoonBlockedPrivateApi")
     public void onActivityCreated(@NonNull Activity activity, @Nullable Bundle bundle) {
         boolean isReflect = true;
         for(Class<? extends Activity> activityClass:LmySkinManager.getInstance().getShieldActivityList()){
