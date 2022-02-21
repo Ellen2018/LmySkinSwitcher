@@ -53,6 +53,18 @@ public class MyLmySkinSwitcherSetting implements LmySkinSwitcherSetting {
        return getDefaultSkin();
     }
 
+    /**
+     * 设置能解析的皮肤包格式
+     * @return
+     */
+    @Override
+    public List<String> skinFormats() {
+        List<String> skinFormats = new ArrayList<>();
+        skinFormats.add(".app");
+        skinFormats.add(".apk");
+        return skinFormats;
+    }
+
     public static LmySkin getDefaultSkin(){
         return new LmySkin("default","default");
     }

@@ -3,9 +3,12 @@ package com.yalemang.skinswitcherlibraray;
 import android.app.Activity;
 import android.app.Application;
 
+import com.yalemang.skinswitcherlibraray.exception.SkinFileFormatException;
+import com.yalemang.skinswitcherlibraray.exception.SkinFileNotFoundException;
 import com.yalemang.skinswitcherlibraray.skinnterface.LmySkinSwitchListener;
 import com.yalemang.skinswitcherlibraray.skinnterface.LmySkinSwitcherSetting;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,7 +33,7 @@ public class LmySkinManager {
     private List<LmySkinSwitchListener> lmySkinSwitchListenerList;
 
     //皮肤文件格式
-    private String skinFileFormat = ".apk";
+    private List<String> skinFileFormats = null;
 
     private LmySkinManager(){
         //初始化皮肤监听集合
@@ -40,24 +43,36 @@ public class LmySkinManager {
     /**
      * 是否选择这个皮肤
      */
-    public boolean isSelectSkin(LmySkin lmySkin){
+    public boolean isSelectSkin(LmySkin lmySkin) {
         return currentSkin.getPath().equals(lmySkin.getPath());
     }
 
-    /**
-     * 获取皮肤格式
-     * @return
-     */
-    String getSkinFileFormat() {
-        return skinFileFormat;
+    private boolean isContainsFormat(LmySkin lmySkin){
+        boolean isContainsFormat = false;
+        for (String format : skinFileFormats) {
+            if(lmySkin.getPath().endsWith(format)){
+                isContainsFormat = true;
+                break;
+            }
+        }
+        return isContainsFormat;
     }
 
     /**
      * 切换皮肤
+     *
      * @param lmySkin
      */
-    public void switchSkin(LmySkin lmySkin){
+    public void switchSkin(LmySkin lmySkin) {
         this.currentSkin = lmySkin;
+        if(!isContainsFormat(lmySkin)){
+            //不能使用的皮肤包格式
+            throw new SkinFileFormatException();
+        }
+        if (!new File(lmySkin.getPath()).exists()) {
+            //皮肤包本地不存在异常，请先将皮肤包缓存到本地再切换
+            throw new SkinFileNotFoundException();
+        }
         lmySkinActivityLifecycle.switchSkin();
     }
 
@@ -158,7 +173,18 @@ public class LmySkinManager {
         } else {
             defaultSkin = this.lmySkinSwitcherSetting.defaultSkin();
         }
+        if (this.lmySkinSwitcherSetting.skinFormats() == null) {
+            //抛出异常
+            throw new NullPointerException("skinFormats is null");
+        } else {
+            skinFileFormats = this.lmySkinSwitcherSetting.skinFormats();
+        }
         this.shieldActivityList = this.lmySkinSwitcherSetting.shieldActivityList();
+
+        //验证格式
+        if(!isContainsFormat(currentSkin)){
+            throw new SkinFileFormatException();
+        }
     }
 
     LmySkinSwitcherSetting getLmySkinSwitcherSetting() {

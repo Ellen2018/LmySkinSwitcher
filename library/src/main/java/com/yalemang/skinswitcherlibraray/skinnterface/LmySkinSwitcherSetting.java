@@ -20,4 +20,6 @@ public interface LmySkinSwitcherSetting {
     LmySkin applyAppLaunchSkin();
     //默认皮肤
     LmySkin defaultSkin();
+    //皮肤格式
+    List<String> skinFormats();
 }
