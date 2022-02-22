@@ -1,5 +1,24 @@
 # LmySkinSwitcher使用文档
 
+# 如何导入:
+
+[![](https://www.jitpack.io/v/Ellen2018/LmySkinSwitcher.svg)](https://www.jitpack.io/#Ellen2018/LmySkinSwitcher)
+
+```
+	allprojects {
+		repositories {
+			...
+			maven { url 'https://www.jitpack.io' }
+		}
+	}
+```
+
+```
+	dependencies {
+	        implementation 'com.github.Ellen2018:LmySkinSwitcher:x.y.z'
+	}
+```
+
 &emsp;&emsp;该轮子借鉴网易云换肤方案原理封装的一套，使用分为以下几个步骤:
 
 - 1.Application里初始化
