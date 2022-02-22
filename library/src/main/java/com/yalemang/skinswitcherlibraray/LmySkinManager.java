@@ -191,9 +191,11 @@ public class LmySkinManager {
         }
         this.shieldActivityList = this.lmySkinSwitcherSetting.shieldActivityList();
 
-        //验证格式
-        if(!isContainsFormat(currentSkin)){
-            throw new SkinFileFormatException();
+        if(!isDefaultSkin(currentSkin)) {
+            //验证格式
+            if (!isContainsFormat(currentSkin)) {
+                throw new SkinFileFormatException();
+            }
         }
     }
 
