@@ -41,7 +41,7 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
         INSTANCE = this;
-        SharePreferenceHelper.getInstance().init(this);
+        //皮肤框架初始化
         LmySkinManager.getInstance().initApp(this);
     }
 }
@@ -337,3 +337,12 @@ LmySkin lmySkin = new LmySkin(file.getAbsolutePath());
 //此皮肤是否为默认皮肤
 boolean isDefault = LmySkinManager.getInstance().isDefault(lmySkin);
 ```
+
+如果对您有帮助，想请作者喝杯奶茶，咖啡，请扫描下方二维码:
+
+# 关于我
+
+#### 名字:Ellen
+#### Email:1961075191@qq.com
+#### CSDN:[ClAndEllen](https://blog.csdn.net/ClAndEllen)
+#### GitHub:[Ellen2018](https://github.com/Ellen2018)
