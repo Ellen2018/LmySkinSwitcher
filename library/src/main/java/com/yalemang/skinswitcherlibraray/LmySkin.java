@@ -8,7 +8,7 @@ import java.io.File;
 public class LmySkin {
     //皮肤对应的本地路径
     protected String path;
-    //皮肤对应的名字，如果不进行设置，则为文件名
+    //皮肤对应的名字
     protected String name;
 
     public LmySkin(String name, String path) {

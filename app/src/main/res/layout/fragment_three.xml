@@ -15,6 +15,6 @@
        android:layout_width="match_parent"
        android:layout_height="?actionBarSize"
        android:layout_alignParentBottom="true"
-       android:background="@color/main_color" />
+       android:background="?colorPrimary" />
 
 </RelativeLayout>

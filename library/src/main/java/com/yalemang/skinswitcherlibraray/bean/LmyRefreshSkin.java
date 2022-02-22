@@ -8,11 +8,17 @@ import android.view.View;
  * 刷新皮肤提供的实体类
  */
 public class LmyRefreshSkin {
+    //对应皮肤的资源,换肤时这个非常重要
     private Resources resources;
+    //对应过滤出的控件对象
     private View view;
+    //控件对象使用的资源id,换肤时这个非常重要
     private int resId;
+    //xml中对应的属性名，例如:background
     private String attributeName;
+    //xml中对应属性使用的value,无作用，因为笔者将其解析到resId
     private String attributeValue;
+    //XML解析过后的属性与Value值都存在在它里面了，无作用
     private AttributeSet attributeSet;
 
     public Resources getResources() {

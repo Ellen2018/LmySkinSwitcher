@@ -14,12 +14,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MyLmySkinSwitcherSetting implements LmySkinSwitcherSetting {
+
+    /**
+     * 具体设置皮肤属性的逻辑
+     * @return
+     */
     @Override
     public LmySkinRefresh lmySkinRefresh() {
         //具体设置皮肤属性的逻辑
         return new MyLmySkinRefresh();
     }
 
+    /**
+     * 过滤皮肤切换要用到的属性
+     * @return
+     */
     @Override
     public List<String> interceptFieldNames() {
         List<String>  xmlFields = new ArrayList<>();
@@ -33,6 +42,10 @@ public class MyLmySkinSwitcherSetting implements LmySkinSwitcherSetting {
         return xmlFields;
     }
 
+    /**
+     * 屏蔽某些Activity不进行重构
+     * @return
+     */
     @Override
     public List<Class<? extends Activity>> shieldActivityList() {
         //屏蔽重构的界面
@@ -41,6 +54,10 @@ public class MyLmySkinSwitcherSetting implements LmySkinSwitcherSetting {
         return shieldActivityList;
     }
 
+    /**
+     * 应用启动时使用的皮肤
+     * @return
+     */
     @Override
     public LmySkin applyAppLaunchSkin() {
         //获取用户是否已切换的皮肤
@@ -48,6 +65,10 @@ public class MyLmySkinSwitcherSetting implements LmySkinSwitcherSetting {
         return lmySkin;
     }
 
+    /**
+     * 获取默认皮肤
+     * @return
+     */
     @Override
     public LmySkin defaultSkin() {
        return getDefaultSkin();
@@ -65,6 +86,7 @@ public class MyLmySkinSwitcherSetting implements LmySkinSwitcherSetting {
         return skinFormats;
     }
 
+    //此方法读者可以自行方式去实现，定义默认皮肤
     public static LmySkin getDefaultSkin(){
         return new LmySkin("default","default");
     }

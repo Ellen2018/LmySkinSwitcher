@@ -65,13 +65,15 @@ public class LmySkinManager {
      */
     public void switchSkin(LmySkin lmySkin) {
         this.currentSkin = lmySkin;
-        if(!isContainsFormat(lmySkin)){
-            //不能使用的皮肤包格式
-            throw new SkinFileFormatException();
-        }
-        if (!new File(lmySkin.getPath()).exists()) {
-            //皮肤包本地不存在异常，请先将皮肤包缓存到本地再切换
-            throw new SkinFileNotFoundException();
+        if(!isDefaultSkin(lmySkin)) {
+            if (!isContainsFormat(lmySkin)) {
+                //不能使用的皮肤包格式
+                throw new SkinFileFormatException();
+            }
+            if (!new File(lmySkin.getPath()).exists()) {
+                //皮肤包本地不存在异常，请先将皮肤包缓存到本地再切换
+                throw new SkinFileNotFoundException();
+            }
         }
         lmySkinActivityLifecycle.switchSkin();
     }
@@ -80,8 +82,16 @@ public class LmySkinManager {
      * 是否是默认皮肤
      * @return
      */
+    public boolean isDefaultSkin(LmySkin lmySkin){
+        return lmySkin.getPath().equals(getDefaultSkin().path);
+    }
+
+    /**
+     * 是否是默认皮肤
+     * @return
+     */
     public boolean isDefaultSkin(){
-        return currentSkin.equals(lmySkinSwitcherSetting.defaultSkin());
+        return currentSkin.getPath().equals(getDefaultSkin().path);
     }
 
     /**
