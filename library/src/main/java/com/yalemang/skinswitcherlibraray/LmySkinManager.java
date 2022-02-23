@@ -2,7 +2,9 @@ package com.yalemang.skinswitcherlibraray;
 
 import android.app.Activity;
 import android.app.Application;
+import android.content.res.AssetManager;
 import android.content.res.Resources;
+import android.util.Log;
 
 import com.yalemang.skinswitcherlibraray.exception.SkinFileFormatException;
 import com.yalemang.skinswitcherlibraray.exception.SkinFileNotFoundException;
@@ -10,6 +12,7 @@ import com.yalemang.skinswitcherlibraray.skinnterface.LmySkinSwitchListener;
 import com.yalemang.skinswitcherlibraray.skinnterface.LmySkinSwitcherSetting;
 
 import java.io.File;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,11 +47,23 @@ public class LmySkinManager {
     }
 
     public Resources getResources(){
-        return resources;
-    }
+        if(isDefaultSkin()){
+            resources = getApplication().getResources();
+        }else {
+            try {
+                Resources appResources = getApplication().getResources();
+                AssetManager assetManager = AssetManager.class.newInstance();
+                Method addAssetPath = assetManager.getClass().getMethod("addAssetPath", String.class);
+                addAssetPath.invoke(assetManager, currentSkin.getPath());
 
-    void setResources(Resources resources) {
-        this.resources = resources;
+                //使用空壳Apk资源
+                resources = new Resources(assetManager,
+                        appResources.getDisplayMetrics(), appResources.getConfiguration());
+            } catch (Exception e){
+                Log.d("LmySkinSwitcher","Exception -->"+e.toString());
+            }
+        }
+        return resources;
     }
 
     /**

@@ -1,7 +1,10 @@
 package com.yalemang.skinswitcher;
 
+import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -32,6 +35,7 @@ public class SkinManagerActivity extends AppCompatActivity {
             SharePreferenceHelper.getInstance().saveSwitchSkin(newSkin);
             skinManagerAdapter.notifyDataSetChanged();
             refreshBottom();
+            Toast.makeText(SkinManagerActivity.this,"皮肤:<"+newSkin.getName()+">切换完成",Toast.LENGTH_SHORT).show();
         }
     };
 

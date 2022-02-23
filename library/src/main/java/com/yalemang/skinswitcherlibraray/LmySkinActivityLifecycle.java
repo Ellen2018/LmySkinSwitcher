@@ -3,6 +3,7 @@ package com.yalemang.skinswitcherlibraray;
 import android.app.Activity;
 import android.app.Application;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 
 import androidx.annotation.NonNull;
@@ -16,12 +17,15 @@ import java.util.List;
 class LmySkinActivityLifecycle implements Application.ActivityLifecycleCallbacks {
 
     private List<Activity> activeActivityList = new ArrayList<>();
+    private List<Activity> recreateTask = new ArrayList<>();
+    //记录是否切换皮肤
+    private volatile boolean isSwitchSkin = false;
 
     @Override
     public void onActivityCreated(@NonNull Activity activity, @Nullable Bundle bundle) {
         boolean isReflect = true;
-        for(Class<? extends Activity> activityClass:LmySkinManager.getInstance().getShieldActivityList()){
-            if(activity.getClass().equals(activityClass)){
+        for (Class<? extends Activity> activityClass : LmySkinManager.getInstance().getShieldActivityList()) {
+            if (activity.getClass().equals(activityClass)) {
                 isReflect = false;
                 break;
             }
@@ -69,7 +73,25 @@ class LmySkinActivityLifecycle implements Application.ActivityLifecycleCallbacks
 
     @Override
     public void onActivityResumed(@NonNull Activity activity) {
-
+        if (isSwitchSkin) {
+            if (recreateTask != null && recreateTask.size() > 0) {
+                int removePosition = -1;
+                for (int i = 0; i < recreateTask.size(); i++) {
+                   Activity recordActivity = recreateTask.get(i);
+                   if(recordActivity.getClass().getName().equals(activity.getClass().getName())){
+                       removePosition = i;
+                       break;
+                   }
+                }
+                recreateTask.remove(removePosition);
+                if (recreateTask.size() == 0) {
+                    //这里才是真正意义上皮肤切换完成
+                    LmySkinManager.getInstance().switchSkinSuccess();
+                    recreateTask = null;
+                    isSwitchSkin = false;
+                }
+            }
+        }
     }
 
     @Override
@@ -92,25 +114,34 @@ class LmySkinActivityLifecycle implements Application.ActivityLifecycleCallbacks
        activeActivityList.remove(activity);
     }
 
-    public void switchSkin(){
-        for(Activity activity:activeActivityList){
-            if(LmySkinManager.getInstance().getShieldActivityList() == null){
+    public void switchSkin() {
+        isSwitchSkin = true;
+        recreateTask = new ArrayList<>();
+        for (Activity activity : activeActivityList) {
+            if (LmySkinManager.getInstance().getShieldActivityList() == null) {
                 //重新使用资源
-                activity.recreate();
-            }else {
+                recreateTask.add(activity);
+            } else {
                 //屏蔽Activity不重构
                 boolean isReCreate = true;
-                for(Class<? extends Activity> activityClass:LmySkinManager.getInstance().getShieldActivityList()){
-                    if(activity.getClass().equals(activityClass)){
+                for (Class<? extends Activity> activityClass : LmySkinManager.getInstance().getShieldActivityList()) {
+                    if (activity.getClass().equals(activityClass)) {
                         isReCreate = false;
                     }
                 }
-                if(isReCreate){
-                    activity.recreate();
+                if (isReCreate) {
+                    recreateTask.add(activity);
                 }
             }
         }
-        //皮肤切换成功
-        LmySkinManager.getInstance().switchSkinSuccess();
+        if (recreateTask.size() > 0) {
+            for (Activity activity : recreateTask) {
+                //recreate实际上新new了一个Activity
+                activity.recreate();
+            }
+        }
+        //皮肤切换成功-这里严格意义上完成切换不对，recreate是异步的
+        //界面没有重构完成，此处先调用了
+        //LmySkinManager.getInstance().switchSkinSuccess();
     }
 }

@@ -48,7 +48,6 @@ class LmySkinAttribute {
                         lmyRefreshSkin.setAttributeSet(attributeSet);
                         lmyRefreshSkin.setResId(resId);
                         lmyRefreshSkin.setResources(skinResource);
-                        LmySkinManager.getInstance().setResources(skinResource);
                         LmySkinManager.getInstance().getLmySkinSwitcherSetting().lmySkinRefresh().refresh(lmyRefreshSkin);
                     }
                 }
