@@ -110,7 +110,7 @@ public class LmySkinManager {
         return defaultSkin;
     }
 
-    public List<Class<? extends Activity>> getShieldActivityList() {
+    List<Class<? extends Activity>> getShieldActivityList() {
         return shieldActivityList;
     }
 
@@ -126,7 +126,7 @@ public class LmySkinManager {
         return INSTANCE;
     }
 
-    public Application getApplication(){
+    Application getApplication(){
         return application;
     }
 
