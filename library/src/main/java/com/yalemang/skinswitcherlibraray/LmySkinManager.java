@@ -2,6 +2,7 @@ package com.yalemang.skinswitcherlibraray;
 
 import android.app.Activity;
 import android.app.Application;
+import android.content.res.Resources;
 
 import com.yalemang.skinswitcherlibraray.exception.SkinFileFormatException;
 import com.yalemang.skinswitcherlibraray.exception.SkinFileNotFoundException;
@@ -31,6 +32,8 @@ public class LmySkinManager {
     private LmySkinSwitcherSetting lmySkinSwitcherSetting;
     //皮肤切换监听集合
     private List<LmySkinSwitchListener> lmySkinSwitchListenerList;
+    //当前使用的Resource
+    private Resources resources;
 
     //皮肤文件格式
     private List<String> skinFileFormats = null;
@@ -38,6 +41,14 @@ public class LmySkinManager {
     private LmySkinManager(){
         //初始化皮肤监听集合
         lmySkinSwitchListenerList = new ArrayList<>();
+    }
+
+    public Resources getResources(){
+        return resources;
+    }
+
+    void setResources(Resources resources) {
+        this.resources = resources;
     }
 
     /**
