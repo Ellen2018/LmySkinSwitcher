@@ -43,7 +43,7 @@ public class App extends Application {
         INSTANCE = this;
         //皮肤框架初始化
         LmySkinManager.getInstance().initApp(this);
-        //必须调用，而且要实现每个方法，此处MyLmySkinSwitcherSetting实现请看步骤二
+		//必须调用，而且要实现每个方法，此处MyLmySkinSwitcherSetting实现请看步骤二
         LmySkinManager.getInstance().setting(new MyLmySkinSwitcherSetting());
     }
 }
@@ -338,6 +338,9 @@ File file = new File(this.getCacheDir(), "skin_red.apk");
 LmySkin lmySkin = new LmySkin(file.getAbsolutePath());
 //此皮肤是否为默认皮肤
 boolean isDefault = LmySkinManager.getInstance().isDefault(lmySkin);
+
+//获取当前皮肤对应的Resources:
+Resources resources = LmySkinManager.getInstance().getResources();
 ```
 
 如果对您有帮助，想请作者喝杯奶茶，咖啡，请扫描下方二维码:
