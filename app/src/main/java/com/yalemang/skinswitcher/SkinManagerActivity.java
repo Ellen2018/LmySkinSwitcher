@@ -1,8 +1,6 @@
 package com.yalemang.skinswitcher;
 
-import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -38,18 +36,8 @@ public class SkinManagerActivity extends AppCompatActivity {
     };
 
     private void refreshBottom(){
-        LmySkin lmySkin = LmySkinManager.getInstance().getCurrentSkin();
-        if(lmySkin.getName().equals("skin_blue.apk")){
-            tvSkinColor.setBackgroundColor(Color.BLUE);
-        }else if(lmySkin.getName().equals("skin_red.apk")){
-            tvSkinColor.setBackgroundColor(Color.RED);
-        }else if(lmySkin.getName().equals("skin_black.apk")){
-            tvSkinColor.setBackgroundColor(Color.BLACK);
-        }else if(lmySkin.getName().equals("skin_green.apk")){
-            tvSkinColor.setBackgroundColor(Color.GREEN);
-        }else {
-            tvSkinColor.setBackgroundColor(Color.parseColor("#FFA500"));
-        }
+        int color = LmySkinManager.getInstance().getResources().getColor(R.color.main_color);
+        tvSkinColor.setBackgroundColor(color);
     }
 
     @Override
