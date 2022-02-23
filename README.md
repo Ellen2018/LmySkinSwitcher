@@ -43,7 +43,7 @@ public class App extends Application {
         INSTANCE = this;
         //皮肤框架初始化
         LmySkinManager.getInstance().initApp(this);
-		//必须调用，而且要实现每个方法，此处MyLmySkinSwitcherSetting实现请看步骤二
+        //必须调用，而且要实现每个方法，此处MyLmySkinSwitcherSetting实现请看步骤二
         LmySkinManager.getInstance().setting(new MyLmySkinSwitcherSetting());
     }
 }
