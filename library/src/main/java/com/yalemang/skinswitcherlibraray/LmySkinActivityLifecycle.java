@@ -77,11 +77,11 @@ class LmySkinActivityLifecycle implements Application.ActivityLifecycleCallbacks
             if (recreateTask != null && recreateTask.size() > 0) {
                 int removePosition = -1;
                 for (int i = 0; i < recreateTask.size(); i++) {
-                   Activity recordActivity = recreateTask.get(i);
-                   if(recordActivity.getClass().getName().equals(activity.getClass().getName())){
-                       removePosition = i;
-                       break;
-                   }
+                    Activity recordActivity = recreateTask.get(i);
+                    if(recordActivity.getClass().equals(activity.getClass())){
+                        removePosition = i;
+                        break;
+                    }
                 }
                 recreateTask.remove(removePosition);
                 if (recreateTask.size() == 0) {
@@ -119,10 +119,8 @@ class LmySkinActivityLifecycle implements Application.ActivityLifecycleCallbacks
         recreateTask = new ArrayList<>();
         for (Activity activity : activeActivityList) {
             if (LmySkinManager.getInstance().getShieldActivityList() == null) {
-                //重新使用资源
                 recreateTask.add(activity);
             } else {
-                //屏蔽Activity不重构
                 boolean isReCreate = true;
                 for (Class<? extends Activity> activityClass : LmySkinManager.getInstance().getShieldActivityList()) {
                     if (activity.getClass().equals(activityClass)) {
