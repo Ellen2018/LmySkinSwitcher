@@ -338,6 +338,8 @@ File file = new File(this.getCacheDir(), "skin_red.apk");
 LmySkin lmySkin = new LmySkin(file.getAbsolutePath());
 //此皮肤是否为默认皮肤
 boolean isDefault = LmySkinManager.getInstance().isDefault(lmySkin);
+//是否当前App使用的此皮肤
+boolean isSelect = LmySkinManager.getInstance().isSelectSkin(lmySkin);
 
 //获取当前皮肤对应的Resources:
 Resources resources = LmySkinManager.getInstance().getResources();
