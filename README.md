@@ -331,6 +331,7 @@ LmySkinSwitchListener lmySkinSwitchListener = new LmySkinSwitchListener() {
 &emsp;&emsp;此外还提供了其它api：
 
 ```
+//注意:以下关于比较的api,是以LmySkin的path（皮肤包本地路径）属性进行比较的
 //当前的皮肤是否使用的默认皮肤
 boolean isDefault = LmySkinManager.getInstance().isDefault();
 

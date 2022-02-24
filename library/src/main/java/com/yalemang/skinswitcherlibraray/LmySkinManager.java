@@ -90,7 +90,6 @@ public class LmySkinManager {
      * @param lmySkin
      */
     public void switchSkin(LmySkin lmySkin) {
-        this.currentSkin = lmySkin;
         if(!isDefaultSkin(lmySkin)) {
             if (!isContainsFormat(lmySkin)) {
                 //不能使用的皮肤包格式
@@ -101,6 +100,8 @@ public class LmySkinManager {
                 throw new SkinFileNotFoundException();
             }
         }
+        //没有异常才修改当前皮肤赋值
+        this.currentSkin = lmySkin;
         lmySkinActivityLifecycle.switchSkin();
     }
 
