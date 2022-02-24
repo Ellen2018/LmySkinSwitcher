@@ -100,7 +100,7 @@ public class LmySkinManager {
                 throw new SkinFileNotFoundException();
             }
         }
-        //没有异常才修改当前皮肤赋值
+        //没有异常才修改当前皮肤的值
         this.currentSkin = lmySkin;
         lmySkinActivityLifecycle.switchSkin();
     }

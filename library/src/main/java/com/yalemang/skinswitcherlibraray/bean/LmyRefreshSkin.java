@@ -1,8 +1,11 @@
 package com.yalemang.skinswitcherlibraray.bean;
 
+import android.app.Activity;
 import android.content.res.Resources;
 import android.util.AttributeSet;
 import android.view.View;
+
+import java.lang.ref.WeakReference;
 
 /**
  * 刷新皮肤提供的实体类
@@ -20,6 +23,16 @@ public class LmyRefreshSkin {
     private String attributeValue;
     //XML解析过后的属性与Value值都存在在它里面了，无作用
     private AttributeSet attributeSet;
+    //当前界面的弱引用
+    private WeakReference<Activity> activityWeakReference;
+
+    public void setActivity(Activity activity) {
+        this.activityWeakReference = new WeakReference<>(activity);
+    }
+
+    public Activity getActivity(){
+        return activityWeakReference.get();
+    }
 
     public Resources getResources() {
         return resources;

@@ -17,6 +17,7 @@ public class MyLmySkinRefresh implements LmySkinRefresh {
         int resId = lmyRefreshSkin.getResId();
         String attributeName = lmyRefreshSkin.getAttributeName();
         Resources skinResource = lmyRefreshSkin.getResources();
+        Log.d("Ellen2018","控件所在界面:"+lmyRefreshSkin.getActivity().getClass().getName());
         Log.d("Ellen2018",attributeName+"->"+lmyRefreshSkin.getAttributeValue());
         Log.d("Ellen2018","resId = "+resId);
         if (attributeName.equals("textColor")) {

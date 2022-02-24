@@ -1,5 +1,6 @@
 package com.yalemang.skinswitcherlibraray;
 
+import android.app.Activity;
 import android.content.res.Resources;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -47,6 +48,8 @@ class LmySkinAttribute {
                         lmyRefreshSkin.setView(view);
                         lmyRefreshSkin.setAttributeSet(attributeSet);
                         lmyRefreshSkin.setResId(resId);
+                        Activity activity = (Activity) view.getContext();
+                        lmyRefreshSkin.setActivity(activity);
                         lmyRefreshSkin.setResources(skinResource);
                         LmySkinManager.getInstance().getLmySkinSwitcherSetting().lmySkinRefresh().refresh(lmyRefreshSkin);
                     }
