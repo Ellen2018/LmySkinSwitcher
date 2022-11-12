@@ -27,7 +27,7 @@ class LmySkinAttribute {
                 if (attributeValue.startsWith("#")) {
                     //固定的Color值，无需修改
                 } else {
-                    int resId = 0;
+                    int resId;
                     //判断前缀是否为？
                     int attrId = Integer.parseInt(attributeValue.substring(1));
                     if (attributeValue.startsWith("?")) {

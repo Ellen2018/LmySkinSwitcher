@@ -1,7 +1,7 @@
 package com.yalemang.skinswitcher.skin;
 
+import android.annotation.SuppressLint;
 import android.content.res.Resources;
-import android.graphics.Color;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -10,7 +10,10 @@ import com.google.android.material.tabs.TabLayout;
 import com.yalemang.skinswitcherlibraray.bean.LmyRefreshSkin;
 import com.yalemang.skinswitcherlibraray.skinnterface.LmySkinRefresh;
 
+import java.util.Objects;
+
 public class MyLmySkinRefresh implements LmySkinRefresh {
+    @SuppressLint("UseCompatLoadingForDrawables")
     @Override
     public void refresh(LmyRefreshSkin lmyRefreshSkin) {
         View view = lmyRefreshSkin.getView();
@@ -39,7 +42,7 @@ public class MyLmySkinRefresh implements LmySkinRefresh {
         if (attributeName.equals("tabSelectedTextColor")) {
             //TabLayout选中文本颜色
             TabLayout tabLayout = (TabLayout) view;
-            tabLayout.setTabTextColors(Color.BLACK, skinResource.getColor(resId));
+            tabLayout.setTabTextColors(Objects.requireNonNull(tabLayout.getTabTextColors()).getDefaultColor(), skinResource.getColor(resId));
         }
     }
 }

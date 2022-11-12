@@ -4,6 +4,8 @@ import android.content.res.AssetManager;
 import android.content.res.Resources;
 import android.util.Log;
 
+import com.yalemang.skinswitcherlibraray.exception.SkinPackParseException;
+
 import java.lang.reflect.Method;
 
 class LmySkinLoadApkPath {
@@ -35,7 +37,8 @@ class LmySkinLoadApkPath {
                         appResources.getDisplayMetrics(), appResources.getConfiguration());
             }
         } catch (Exception e) {
-            Log.d("LmySkinSwitcher","Exception -->"+e.toString());
+            Log.d("LmySkinSwitcher","Exception -->"+e);
+            throw new SkinPackParseException(e.getMessage());
         }
     }
 }

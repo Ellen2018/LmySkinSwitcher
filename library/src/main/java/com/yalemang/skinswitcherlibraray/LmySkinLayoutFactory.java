@@ -11,11 +11,12 @@ import androidx.annotation.Nullable;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
+import java.util.Objects;
 
 class LmySkinLayoutFactory implements LayoutInflater.Factory2 {
 
     //具体拦截逻辑都在该类里
-    private LmySkinAttribute skinAttribute;
+    private final LmySkinAttribute skinAttribute;
 
     public LmySkinLayoutFactory(){
         skinAttribute = new LmySkinAttribute();
@@ -33,7 +34,7 @@ class LmySkinLayoutFactory implements LayoutInflater.Factory2 {
     };
 
     //反射控件对应的构造器而使用
-    private static final Class[] mConstructorSignature = new Class[]{Context.class,AttributeSet.class};
+    private static final Class<?>[] mConstructorSignature = new Class<?>[]{Context.class,AttributeSet.class};
     //存储控件的构造器，避免重复创建
     private static final HashMap<String, Constructor<? extends View>> mConstructor = new HashMap<>();
 
@@ -74,11 +75,7 @@ class LmySkinLayoutFactory implements LayoutInflater.Factory2 {
         if(constructor != null){
             try {
                 view = constructor.newInstance(context,attributeSet);
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            } catch (InstantiationException e) {
-                e.printStackTrace();
-            } catch (InvocationTargetException e) {
+            } catch (IllegalAccessException | InstantiationException | InvocationTargetException e) {
                 e.printStackTrace();
             }
         }

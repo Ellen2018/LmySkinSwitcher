@@ -1,5 +1,6 @@
 package com.yalemang.skinswitcherlibraray;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Application;
 import android.os.Bundle;
@@ -10,13 +11,15 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.view.LayoutInflaterCompat;
 
+import com.yalemang.skinswitcherlibraray.exception.SkinSwitchUnknownException;
+
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
 class LmySkinActivityLifecycle implements Application.ActivityLifecycleCallbacks {
 
-    private List<Activity> activeActivityList = new ArrayList<>();
+    private final List<Activity> activeActivityList = new ArrayList<>();
     private List<Activity> recreateTask = new ArrayList<>();
     //记录是否切换皮肤
     private volatile boolean isSwitchSkin = false;
@@ -44,6 +47,7 @@ class LmySkinActivityLifecycle implements Application.ActivityLifecycleCallbacks
      * 最新的方式，适配Android Q
      * @param inflater
      */
+    @SuppressLint("DiscouragedPrivateApi")
     private static void forceSetFactory2(LayoutInflater inflater) {
         Class<LayoutInflaterCompat> compatClass = LayoutInflaterCompat.class;
         Class<LayoutInflater> inflaterClass = LayoutInflater.class;
@@ -59,10 +63,9 @@ class LmySkinActivityLifecycle implements Application.ActivityLifecycleCallbacks
             LmySkinLayoutFactory skinLayoutFactory = new LmySkinLayoutFactory();
             mFactory2.set(inflater, skinLayoutFactory);
             mFactory.set(inflater, skinLayoutFactory);
-        } catch (IllegalAccessException e) {
+        } catch (IllegalAccessException | NoSuchFieldException e) {
             e.printStackTrace();
-        } catch (NoSuchFieldException e) {
-            e.printStackTrace();
+            throw new SkinSwitchUnknownException(e.getMessage());
         }
     }
 

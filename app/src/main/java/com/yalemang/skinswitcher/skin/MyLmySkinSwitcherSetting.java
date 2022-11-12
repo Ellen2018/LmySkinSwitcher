@@ -61,8 +61,7 @@ public class MyLmySkinSwitcherSetting implements LmySkinSwitcherSetting {
     @Override
     public LmySkin applyAppLaunchSkin() {
         //获取用户是否已切换的皮肤
-        LmySkin lmySkin = SharePreferenceHelper.getInstance().getCurrentSaveSkin(App.INSTANCE);
-        return lmySkin;
+        return SharePreferenceHelper.getInstance().getCurrentSaveSkin(App.INSTANCE);
     }
 
     /**
